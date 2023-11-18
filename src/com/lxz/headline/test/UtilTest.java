@@ -1,9 +1,15 @@
 package com.lxz.headline.test;
 
 import com.lxz.headline.util.GsonUtil;
+import com.lxz.headline.util.JDBCUtil;
+import com.lxz.headline.util.MD5Util;
 import lombok.Data;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +34,10 @@ public class UtilTest {
                     '}';
         }
     }
+
+    /**
+     * 对GsonUtil工具类进行测试
+     */
     @Test
     public void gsonUtilTest() {
         PojoTest pojo = new PojoTest(1,"lxz");
@@ -53,5 +63,47 @@ public class UtilTest {
         //String -> Map
         Map<Object, Object> map1 = GsonUtil.toMap(jsonMap);
         System.out.println("String -> Map:"+map1);
+    }
+
+    /**
+     * 对JDBCUtil工具类进行测试
+     */
+    @Test
+    public void JdbcTest(){
+        Connection connection = JDBCUtil.getConnection();
+        String sql = "select count(1) from news_user;";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Long count = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                count = (Long) resultSet.getObject(1);
+            }
+            System.out.println(count);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if (null != resultSet) {
+                    resultSet.close();
+                }
+                if (null != preparedStatement) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        JDBCUtil.close();
+    }
+
+
+    @Test
+    public void md5Test(){
+        String oldPwd = "123456";
+        String newPwd = MD5Util.MD5(oldPwd);
+        System.out.println(newPwd);
     }
 }
