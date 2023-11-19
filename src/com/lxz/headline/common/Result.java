@@ -20,7 +20,7 @@ public class Result<T>{
      * @return 返回result对象
      * @param <T>
      */
-    protected static <T> Result<T> build(T data){
+    public static <T> Result<T> build(T data){
         Result<T> result = new Result<T>();
         if (null != data) {
             result.setData(data);
@@ -36,7 +36,7 @@ public class Result<T>{
      * @return 返回result对象
      * @param <T>
      */
-    protected static <T> Result<T> build(T data,Integer code,String message){
+    public static <T> Result<T> build(T data,Integer code,String message){
         Result<T> result = build(data);
         result.setCode(code);
         result.setMessage(message);
@@ -50,7 +50,7 @@ public class Result<T>{
      * @return 返回result对象
      * @param <T>
      */
-    protected static <T> Result<T> build(T data,ResultCodeEnum resultCodeEnum){
+    public static <T> Result<T> build(T data,ResultCodeEnum resultCodeEnum){
         Result<T> result = build((data));
         result.setCode(resultCodeEnum.getCode());
         result.setMessage(resultCodeEnum.getMessage());
@@ -63,7 +63,7 @@ public class Result<T>{
      * @return 返回result对象
      * @param <T>
      */
-    protected static <T> Result<T> ok(T data){
+    public static <T> Result<T> ok(T data){
         return build(data,ResultCodeEnum.SUCCESS);
     }
     public Integer getCode() {

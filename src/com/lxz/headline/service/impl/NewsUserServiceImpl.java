@@ -1,6 +1,16 @@
 package com.lxz.headline.service.impl;
 
+import com.lxz.headline.dao.NewsUserDao;
+import com.lxz.headline.dao.impl.NewsUserDaoImpl;
+import com.lxz.headline.pojo.NewsUser;
 import com.lxz.headline.service.NewsUserService;
+import com.lxz.headline.util.MD5Util;
 
 public class NewsUserServiceImpl implements NewsUserService {
+    private NewsUserDao userDao = new NewsUserDaoImpl();
+    @Override
+    public NewsUser findByUsername(NewsUser newsUser) {
+        newsUser.setUserPwd(MD5Util.MD5(newsUser.getUserPwd()));
+        return userDao.findByUsername(newsUser);
+    }
 }

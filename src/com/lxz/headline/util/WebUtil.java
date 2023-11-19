@@ -44,6 +44,7 @@ public class WebUtil {
     public static void writeResponse(HttpServletResponse resp, Result result){
         resp.setContentType("application/json;charset=UTF-8");
         String info = GsonUtil.toJson(result);
+        System.out.println(info);
         try {
             resp.getWriter().write(info);
         } catch (IOException e) {
