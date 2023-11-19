@@ -2,6 +2,7 @@ package com.lxz.headline.test;
 
 import com.lxz.headline.util.GsonUtil;
 import com.lxz.headline.util.JDBCUtil;
+import com.lxz.headline.util.JwtHelper;
 import com.lxz.headline.util.MD5Util;
 import lombok.Data;
 import org.junit.Test;
@@ -98,12 +99,21 @@ public class UtilTest {
         }
         JDBCUtil.close();
     }
-
-
     @Test
     public void md5Test(){
         String oldPwd = "123456";
         String newPwd = MD5Util.MD5(oldPwd);
         System.out.println(newPwd);
+    }
+
+    @Test
+    public void tokentest() {
+        String token = JwtHelper.createToken(1L);
+        System.out.println(token);
+
+        Long userId = JwtHelper.getUserId(token);
+        System.out.println(userId);
+
+        System.out.println(JwtHelper.isExpiration(token));
     }
 }

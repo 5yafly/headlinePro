@@ -12,11 +12,9 @@ public class JwtHelper {
     //生成token字符串
     public static String createToken(Long userId ) {
         String token = Jwts.builder()
-
                 .setSubject("YYGH-USER")
                 .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))
                 .claim("userId", userId)
-
                 .signWith(SignatureAlgorithm.HS512, tokenSignKey)
                 .compressWith(CompressionCodecs.GZIP)
                 .compact();
