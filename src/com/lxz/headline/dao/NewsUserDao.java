@@ -16,4 +16,18 @@ public interface NewsUserDao {
      * @return  找到返回NewsUser对象，找不到返回null
      */
     NewsUser findByUid(Integer userId);
+
+    /**
+     * 根据用户名查找用户的方法
+     * @param username 用户名
+     * @return  找到返回NewsUser对象，找不到返回null
+     */
+    NewsUser findByUername(String username);
+
+    /**
+     * 添加用户信息的方法
+     * @param newsUser 用户信息
+     * @return  成功返回1，失败返回0
+     */
+    Integer addNewsUser(NewsUser newsUser);
 }

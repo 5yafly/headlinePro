@@ -41,7 +41,7 @@ public class NewsUserController extends BaseController{
     }
 
     /**
-     * 根据token口令获得用户信息的接口的实现
+     * 根据token口令获得用户信息的业务接口的实现
      * @param req
      * @param resp
      * @throws ServletException
@@ -58,6 +58,40 @@ public class NewsUserController extends BaseController{
                 data.put("login",newsUser);
                 result = Result.ok(data);
             }
+        }
+        WebUtil.writeResponse(resp,result);
+    }
+
+    /**
+     * 校验用户名是否被占用的业务接口的实现
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void checkUsername(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        NewsUser newsUser = userService.findByUername(username);
+        Result result = Result.ok(null);
+        if (null != newsUser) {
+            result = Result.build(null, ResultCodeEnum.ACCOUNTREPEAT);
+        }
+        WebUtil.writeResponse(resp,result);
+    }
+
+    /**
+     * 完成注册的业务接口
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void regist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        NewsUser newsUser = WebUtil.readRequest(req, NewsUser.class);
+        Integer rows = userService.registUser(newsUser);
+        Result result = Result.ok(null);
+        if (rows == 0) {
+            result = Result.build(null,ResultCodeEnum.ERROR);
         }
         WebUtil.writeResponse(resp,result);
     }

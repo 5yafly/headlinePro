@@ -16,9 +16,9 @@ public class NewsUserDaoImpl extends BaseDao implements NewsUserDao{
                     user_pwd userPwd,
                     nick_name nickName
                 from news_user
-                where username = ?
+                where username = ? and user_pwd = ?
                 """;
-        List<NewsUser> newsUsers = executeQuerys(NewsUser.class, sql, newsUser.getUsername());
+        List<NewsUser> newsUsers = executeQuerys(NewsUser.class, sql, newsUser.getUsername(),newsUser.getUserPwd());
         return newsUsers != null && newsUsers.size() != 0 ? newsUsers.get(0) : null;
     }
 
@@ -35,5 +35,28 @@ public class NewsUserDaoImpl extends BaseDao implements NewsUserDao{
                 """;
         List<NewsUser> newsUsers = executeQuerys(NewsUser.class, sql, userId);
         return newsUsers != null && newsUsers.size() != 0 ? newsUsers.get(0) : null;
+    }
+
+    @Override
+    public NewsUser findByUername(String username) {
+        String sql = """
+               select
+                    uid,
+                    username,
+                    user_pwd userPwd,
+                    nick_name nickName
+                from news_user
+                where username = ?
+                """;
+        List<NewsUser> newsUsers = executeQuerys(NewsUser.class, sql, username);
+        return newsUsers != null && newsUsers.size() != 0 ? newsUsers.get(0) : null;
+    }
+
+    @Override
+    public Integer addNewsUser(NewsUser newsUser) {
+        String sql = """
+                insert into news_user(username,user_pwd,nick_name) values(?,?,?)
+                """;
+        return executeUpdate(sql,newsUser.getUsername(),newsUser.getUserPwd(),newsUser.getNickName());
     }
 }

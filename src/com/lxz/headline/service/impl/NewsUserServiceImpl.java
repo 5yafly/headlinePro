@@ -18,4 +18,15 @@ public class NewsUserServiceImpl implements NewsUserService {
     public NewsUser findByUid(Integer userId) {
         return userDao.findByUid(userId);
     }
+
+    @Override
+    public NewsUser findByUername(String username) {
+        return userDao.findByUername(username);
+    }
+
+    @Override
+    public Integer registUser(NewsUser newsUser) {
+        newsUser.setUserPwd(MD5Util.MD5(newsUser.getUserPwd()));
+        return userDao.addNewsUser(newsUser);
+    }
 }
