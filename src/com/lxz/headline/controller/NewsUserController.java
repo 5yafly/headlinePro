@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/user")
+@WebServlet("/user/*")
 public class NewsUserController extends BaseController{
     private NewsUserService userService = new NewsUserServiceImpl();
     /**

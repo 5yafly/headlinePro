@@ -1,13 +1,11 @@
 package com.lxz.headline.controller;
 
-import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -20,7 +18,7 @@ public class BaseController extends HttpServlet{
         String methodName = split[split.length - 1];
         Class clazz = this.getClass();
         try {
-            Method declaredMethod = clazz.getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletRequest.class);
+            Method declaredMethod = clazz.getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
             declaredMethod.setAccessible(true);
             declaredMethod.invoke(this,req,resp);
         } catch (NoSuchMethodException e) {
