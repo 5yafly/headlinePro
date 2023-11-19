@@ -9,8 +9,13 @@ import com.lxz.headline.util.MD5Util;
 public class NewsUserServiceImpl implements NewsUserService {
     private NewsUserDao userDao = new NewsUserDaoImpl();
     @Override
-    public NewsUser findByUsername(NewsUser newsUser) {
+    public NewsUser findByNewsUser(NewsUser newsUser) {
         newsUser.setUserPwd(MD5Util.MD5(newsUser.getUserPwd()));
-        return userDao.findByUsername(newsUser);
+        return userDao.findByNewsUser(newsUser);
+    }
+
+    @Override
+    public NewsUser findByUid(Integer userId) {
+        return userDao.findByUid(userId);
     }
 }

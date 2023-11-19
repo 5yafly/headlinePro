@@ -28,7 +28,7 @@ public class NewsUserController extends BaseController{
      */
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         NewsUser newsUser = WebUtil.readRequest(req, NewsUser.class);
-        NewsUser loginUser = userService.findByUsername(newsUser);
+        NewsUser loginUser = userService.findByNewsUser(newsUser);
         Result result = null;
         if (loginUser != null) {
             Map map = new HashMap();
@@ -36,6 +36,28 @@ public class NewsUserController extends BaseController{
             result = Result.ok(map);
         }else {
             result = Result.build(null, ResultCodeEnum.ERROR);
+        }
+        WebUtil.writeResponse(resp,result);
+    }
+
+    /**
+     * 根据token口令获得用户信息的接口的实现
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String token = req.getHeader("token");
+        Result result = Result.build(null,ResultCodeEnum.ERROR);
+        if (null != token && (!"".equals(token))) {
+            if (!JwtHelper.isExpiration(token)) {
+                NewsUser newsUser = userService.findByUid(JwtHelper.getUserId(token).intValue());
+                Map data = new HashMap();
+                newsUser.setUserPwd("");
+                data.put("login",newsUser);
+                result = Result.ok(data);
+            }
         }
         WebUtil.writeResponse(resp,result);
     }

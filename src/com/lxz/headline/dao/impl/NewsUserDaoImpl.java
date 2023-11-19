@@ -8,7 +8,7 @@ import java.util.List;
 
 public class NewsUserDaoImpl extends BaseDao implements NewsUserDao{
     @Override
-    public NewsUser findByUsername(NewsUser newsUser) {
+    public NewsUser findByNewsUser(NewsUser newsUser) {
         String sql = """
                 select
                     uid,
@@ -19,6 +19,21 @@ public class NewsUserDaoImpl extends BaseDao implements NewsUserDao{
                 where username = ?
                 """;
         List<NewsUser> newsUsers = executeQuerys(NewsUser.class, sql, newsUser.getUsername());
+        return newsUsers != null && newsUsers.size() != 0 ? newsUsers.get(0) : null;
+    }
+
+    @Override
+    public NewsUser findByUid(Integer userId) {
+        String sql = """
+                select
+                    uid,
+                    username,
+                    user_pwd userPwd,
+                    nick_name nickName
+                from news_user
+                where uid = ?
+                """;
+        List<NewsUser> newsUsers = executeQuerys(NewsUser.class, sql, userId);
         return newsUsers != null && newsUsers.size() != 0 ? newsUsers.get(0) : null;
     }
 }

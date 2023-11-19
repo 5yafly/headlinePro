@@ -8,5 +8,12 @@ public interface NewsUserService {
      * @param newsUser 用户输入的用户
      * @return  找到返回NewsUser对象，找不到返回null
      */
-    NewsUser findByUsername(NewsUser newsUser);
+    NewsUser findByNewsUser(NewsUser newsUser);
+
+    /**
+     * 根据用户登录的id查找用户的方法
+     * @param userId  用户id
+     * @return  找到返回NewsUser对象，找不到返回null
+     */
+    NewsUser findByUid(Integer userId);
 }
