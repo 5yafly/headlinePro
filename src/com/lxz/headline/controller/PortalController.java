@@ -6,6 +6,7 @@ import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
 import com.lxz.headline.service.NewsHeadlineService;
 import com.lxz.headline.service.impl.NewsHeadlineServiceImpl;
+import com.lxz.headline.util.JwtHelper;
 import com.lxz.headline.util.WebUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -61,6 +62,24 @@ public class PortalController extends BaseController{
             result = Result.ok(data);
         }else {
             result = Result.build(null,ResultCodeEnum.ERROR);
+        }
+        WebUtil.writeResponse(resp,result);
+    }
+
+    /**
+     * 检测当前登录是否过期的业务接口
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void checkLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String token = req.getHeader("token");
+        Result result = Result.build(null,ResultCodeEnum.NOT_LOGIN);
+        if (null != token) {
+            if (!JwtHelper.isExpiration(token)) {
+                result = Result.ok(null);
+            }
         }
         WebUtil.writeResponse(resp,result);
     }
