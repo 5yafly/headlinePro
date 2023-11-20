@@ -2,6 +2,7 @@ package com.lxz.headline.controller;
 
 import com.lxz.headline.common.Result;
 import com.lxz.headline.common.ResultCodeEnum;
+import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
 import com.lxz.headline.service.NewsHeadlineService;
 import com.lxz.headline.service.impl.NewsHeadlineServiceImpl;
@@ -39,6 +40,27 @@ public class PortalController extends BaseController{
             result = Result.ok(data);
         }else {
             result = Result.build(null, ResultCodeEnum.ERROR);
+        }
+        WebUtil.writeResponse(resp,result);
+    }
+
+    /**
+     * 查看新闻详情的业务接口
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void showHeadlineDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int hid = Integer.parseInt(req.getParameter("hid"));
+        HeadlineDetailVo headlineDetailVo = headlineService.showHeadlineDetail(hid);
+        Map data = new HashMap();
+        data.put("headline",headlineDetailVo);
+        Result result = null;
+        if (null != headlineDetailVo) {
+            result = Result.ok(data);
+        }else {
+            result = Result.build(null,ResultCodeEnum.ERROR);
         }
         WebUtil.writeResponse(resp,result);
     }

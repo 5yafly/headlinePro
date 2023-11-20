@@ -3,6 +3,7 @@ package com.lxz.headline.service.impl;
 import com.lxz.headline.dao.NewsHeadlineDao;
 import com.lxz.headline.dao.impl.NewsHeadlineDaoImpl;
 import com.lxz.headline.pojo.NewsHeadline;
+import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlinePageVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
 import com.lxz.headline.service.NewsHeadlineService;
@@ -27,5 +28,10 @@ public class NewsHeadlineServiceImpl implements NewsHeadlineService {
         pageInfo.put("totalPage",totalPage);
         pageInfo.put("totalSize",totalSize);
         return pageInfo;
+    }
+    @Override
+    public HeadlineDetailVo showHeadlineDetail(int hid) {
+        headlineDao.updateHeadline(hid);
+        return headlineDao.showHeadlineDetail(hid);
     }
 }

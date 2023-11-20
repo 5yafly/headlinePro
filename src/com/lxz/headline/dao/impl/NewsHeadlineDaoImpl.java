@@ -2,6 +2,7 @@ package com.lxz.headline.dao.impl;
 
 import com.lxz.headline.dao.BaseDao;
 import com.lxz.headline.dao.NewsHeadlineDao;
+import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlinePageVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
 
@@ -68,5 +69,45 @@ public class NewsHeadlineDaoImpl extends BaseDao implements NewsHeadlineDao {
             param.add("%"+headlineQueryVo.getKeyWords()+"%");
         }
         return executeQuery(Long.class, sql, param.toArray()).intValue();
+    }
+
+    /**
+     * hid;
+     * title;
+     * article;
+     * type;
+     * pageViews;
+     * publisher;
+     * pastHours; news_headline
+     * typeName;  news_type        tid=type
+     * author;    news_name        uid=publisher
+     * TIMESTAMPDIFF
+     * timestampdiff
+     */
+    @Override
+    public HeadlineDetailVo showHeadlineDetail(int hid) {
+        String sql = """
+                select
+                    hid,
+                    title,
+                    article,
+                    type,
+                    page_views pageViews,
+                    publisher,
+                    TIMESTAMPDIFF(HOUR,create_time, NOW()) pastHours,
+                    tname typeName,
+                    nick_name author
+                from news_headline,news_type,news_user
+                where
+                    hid = ? and news_headline.type = news_type.tid and news_headline.publisher = news_user.uid
+                """;
+        List<HeadlineDetailVo> headlineDetailVos = executeQuerys(HeadlineDetailVo.class, sql, hid);
+        return headlineDetailVos != null && headlineDetailVos.size() != 0 ? headlineDetailVos.get(0) : null;
+    }
+
+    @Override
+    public void updateHeadline(int hid) {
+        String sql = "update news_headline set page_views = page_views + 1 where hid = ?;";
+        executeUpdate(sql,hid);
     }
 }
