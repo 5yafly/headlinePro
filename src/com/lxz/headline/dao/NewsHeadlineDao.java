@@ -1,5 +1,6 @@
 package com.lxz.headline.dao;
 
+import com.lxz.headline.pojo.NewsHeadline;
 import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlinePageVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
@@ -33,4 +34,11 @@ public interface NewsHeadlineDao {
      * @param hid 新闻id
      */
     void updateHeadline(int hid);
+
+    /**
+     * 添加新闻
+     * @param newsHeadline 新闻信息
+     * @return  成功返回1，失败返回0
+     */
+    int addNewsHeadline(NewsHeadline newsHeadline);
 }

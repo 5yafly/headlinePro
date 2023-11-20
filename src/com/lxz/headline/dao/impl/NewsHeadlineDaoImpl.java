@@ -2,6 +2,7 @@ package com.lxz.headline.dao.impl;
 
 import com.lxz.headline.dao.BaseDao;
 import com.lxz.headline.dao.NewsHeadlineDao;
+import com.lxz.headline.pojo.NewsHeadline;
 import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlinePageVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
@@ -109,5 +110,11 @@ public class NewsHeadlineDaoImpl extends BaseDao implements NewsHeadlineDao {
     public void updateHeadline(int hid) {
         String sql = "update news_headline set page_views = page_views + 1 where hid = ?;";
         executeUpdate(sql,hid);
+    }
+
+    @Override
+    public int addNewsHeadline(NewsHeadline newsHeadline) {
+        String sql = "insert into news_headline values(DEFAULT,?,?,?,?,0,NOW(),NOW(),0)";
+        return executeUpdate(sql, newsHeadline.getTitle(), newsHeadline.getArticle(), newsHeadline.getType(), newsHeadline.getPublisher());
     }
 }

@@ -1,5 +1,6 @@
 package com.lxz.headline.service;
 
+import com.lxz.headline.pojo.NewsHeadline;
 import com.lxz.headline.pojo.vo.HeadlineDetailVo;
 import com.lxz.headline.pojo.vo.HeadlineQueryVo;
 
@@ -19,4 +20,11 @@ public interface NewsHeadlineService {
      * @return  成功返回HeadlineDetailVo对象，失败返回null
      */
     HeadlineDetailVo showHeadlineDetail(int hid);
+
+    /**
+     * 发布新闻的方法
+     * @param newsHeadline  新闻信息
+     * @return  成功返回1，失败返回0
+     */
+    int publish(NewsHeadline newsHeadline);
 }
