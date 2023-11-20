@@ -55,4 +55,11 @@ public interface NewsHeadlineDao {
      * @return  成功返回1，失败返回0
      */
     int update(NewsHeadline newsHeadline);
+
+    /**
+     * 根据新闻id修改is_deleted
+     * @param hid   新闻id
+     * @return  成功返回1，失败返回0
+     */
+    int removeByHid(int hid);
 }

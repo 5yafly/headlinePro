@@ -73,4 +73,21 @@ public class NewsHeadlineController extends BaseController{
         }
         WebUtil.writeResponse(resp,result);
     }
+
+    /**
+     * 删除新闻的业务接口(伪删除，只是将is_deleted改为1)
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void removeByHid(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int hid = Integer.parseInt(req.getParameter("hid"));
+        int rows = headlineService.removeByHid(hid);
+        Result result = Result.build(null,ResultCodeEnum.ERROR);
+        if (rows > 0) {
+            result = Result.ok(null);
+        }
+        WebUtil.writeResponse(resp,result);
+    }
 }

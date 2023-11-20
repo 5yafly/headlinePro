@@ -41,4 +41,11 @@ public interface NewsHeadlineService {
      * @return  成功返回1，失败返回0
      */
     int update(NewsHeadline newsHeadline);
+
+    /**
+     * 删除新闻的方法
+     * @param hid   新闻id
+     * @return  成功返回1，失败返回0
+     */
+    int removeByHid(int hid);
 }
