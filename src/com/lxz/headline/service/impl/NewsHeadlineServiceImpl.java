@@ -24,7 +24,7 @@ public class NewsHeadlineServiceImpl implements NewsHeadlineService {
         Map pageInfo = new HashMap();
         pageInfo.put("pageData",pageData);
         pageInfo.put("pageNum",pageNum);
-        pageInfo.put("pageSzie",pageSzie);
+        pageInfo.put("pageSize",pageSzie);
         pageInfo.put("totalPage",totalPage);
         pageInfo.put("totalSize",totalSize);
         return pageInfo;
@@ -38,5 +38,15 @@ public class NewsHeadlineServiceImpl implements NewsHeadlineService {
     @Override
     public int publish(NewsHeadline newsHeadline) {
         return headlineDao.addNewsHeadline(newsHeadline);
+    }
+
+    @Override
+    public NewsHeadline findByHid(int hid) {
+        return headlineDao.findByHid(hid);
+    }
+
+    @Override
+    public int update(NewsHeadline newsHeadline) {
+        return headlineDao.update(newsHeadline);
     }
 }

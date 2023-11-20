@@ -27,4 +27,18 @@ public interface NewsHeadlineService {
      * @return  成功返回1，失败返回0
      */
     int publish(NewsHeadline newsHeadline);
+
+    /**
+     * 修改新闻时需要回显的方法
+     * @param hid   新闻id
+     * @return  成功返回NewsHeadline对象，失败返回null
+     */
+    NewsHeadline findByHid(int hid);
+
+    /**
+     * 修改新闻的方法
+     * @param newsHeadline 新闻信息
+     * @return  成功返回1，失败返回0
+     */
+    int update(NewsHeadline newsHeadline);
 }

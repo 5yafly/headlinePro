@@ -100,7 +100,7 @@ public class NewsHeadlineDaoImpl extends BaseDao implements NewsHeadlineDao {
                     nick_name author
                 from news_headline,news_type,news_user
                 where
-                    hid = ? and news_headline.type = news_type.tid and news_headline.publisher = news_user.uid
+                    hid = ? and news_headline.type = news_type.tid and news_headline.publisher = news_user.uid;
                 """;
         List<HeadlineDetailVo> headlineDetailVos = executeQuerys(HeadlineDetailVo.class, sql, hid);
         return headlineDetailVos != null && headlineDetailVos.size() != 0 ? headlineDetailVos.get(0) : null;
@@ -114,7 +114,42 @@ public class NewsHeadlineDaoImpl extends BaseDao implements NewsHeadlineDao {
 
     @Override
     public int addNewsHeadline(NewsHeadline newsHeadline) {
-        String sql = "insert into news_headline values(DEFAULT,?,?,?,?,0,NOW(),NOW(),0)";
+        String sql = "insert into news_headline values(DEFAULT,?,?,?,?,0,NOW(),NOW(),0);";
         return executeUpdate(sql, newsHeadline.getTitle(), newsHeadline.getArticle(), newsHeadline.getType(), newsHeadline.getPublisher());
+    }
+
+    @Override
+    public NewsHeadline findByHid(int hid) {
+        String sql = """
+                select 
+                    hid,
+                    title,
+                    article,
+                    type,
+                    publisher,
+                    page_views pageViews,
+                    create_time createTime,
+                    update_time updateTime,
+                    is_deleted isDeleted
+                from news_headline
+                where
+                    hid = ?;
+                """;
+        List<NewsHeadline> newsHeadlines = executeQuerys(NewsHeadline.class, sql, hid);
+        return newsHeadlines != null && newsHeadlines.size() != 0 ? newsHeadlines.get(0) : null;
+    }
+
+    @Override
+    public int update(NewsHeadline newsHeadline) {
+        String sql = """
+                update news_headline
+                set 
+                    title = ?,
+                    article = ?,
+                    type = ?,
+                    update_time = NOW()
+                where hid = ?
+                ;""";
+        return executeUpdate(sql, newsHeadline.getTitle(), newsHeadline.getArticle(), newsHeadline.getType(),newsHeadline.getHid());
     }
 }
